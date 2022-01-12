@@ -6,7 +6,7 @@
 
 const NotesModel = require("./notesModel");
 const NotesView = require("./notesView");
-const NotesApi = require("./notesApi");
+const NotesApi = require("../notes-backend-server/notesApi");
 
 
 const model = new NotesModel();

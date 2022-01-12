@@ -39,17 +39,20 @@
           this.inputEl = document.querySelector("#note-input");
           this.buttonEl = document.querySelector("#add-note-button");
           this.buttonEl.addEventListener("click", () => {
-            this.displayNotes();
-            this.inputEl.value = "";
+            let newNote = this.inputEl.value;
+            if (newNote) {
+              this.api.createNote(newNote, (res) => {
+                this.model.setNotes(res);
+                this.displayNotes();
+                this.inputEl.value = "";
+              });
+            }
           });
         }
         displayNotes = () => {
           const elements = document.getElementsByClassName("note");
           while (elements.length > 0)
             elements[0].remove();
-          if (this.inputEl.value) {
-            this.model.addNote(this.inputEl.value);
-          }
           let array = this.model.getNotes();
           for (let i = 0; i < array.length; i++) {
             let newDiv = document.createElement("div");
@@ -63,12 +66,21 @@
     }
   });
 
-  // notesApi.js
+  // ../notes-backend-server/notesApi.js
   var require_notesApi = __commonJS({
-    "notesApi.js"(exports, module) {
+    "../notes-backend-server/notesApi.js"(exports, module) {
       var NotesApi2 = class {
         loadNotes(callback) {
           fetch("http://localhost:3000/notes").then((res) => res.json()).then((res) => callback(res));
+        }
+        createNote(note, callback) {
+          fetch("http://localhost:3000/notes", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ "content": note })
+          }).then((res) => res.json()).then((data) => callback(data));
         }
       };
       module.exports = NotesApi2;
