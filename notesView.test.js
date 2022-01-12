@@ -1,22 +1,23 @@
-// /**
-//  * @jest-environment jsdom
-//  */
-// const NotesModel = require("./notesModel");
-// const NotesView = require("./notesView");
-// const NotesApi = require("../notes-backend-server/notesApi")
-// const fs = require("fs");
+/**
+ * @jest-environment jsdom
+ */
+const NotesModel = require("./notesModel");
+const NotesView = require("./notesView");
+const NotesApi = require("../notes-backend-server/notesApi");
+const fs = require("fs");
 
-// describe("displays notes", () => {
-//   it("gets list of notes from the model", () => {
-//     document.body.innerHTML = fs.readFileSync("./index.html");
-//     const model = new NotesModel();
-//     const api = new NotesApi()
-//     model.addNote("Buy milk");
-//     model.addNote("Go to the gym");
-//     const view = new NotesView(model,api);
-//     view.displayNotes();
-//     expect(document.querySelectorAll(".note").length).toEqual(2);
-//   });
+describe("displays notes", () => {
+  it("gets list of notes from the model", () => {
+    document.body.innerHTML = fs.readFileSync("./index.html");
+    const model = new NotesModel();
+    const api = new NotesApi();
+    model.addNote("Buy milk");
+    model.addNote("Go to the gym");
+    const view = new NotesView(model, api);
+    view.displayNotes();
+    expect(document.querySelectorAll(".note").length).toEqual(2);
+  });
+});
 
 //   it("input new note title then click button", () => {
 //     document.body.innerHTML = fs.readFileSync("./index.html");

@@ -1,24 +1,22 @@
 class NotesView {
   constructor(model, api) {
-    this.api = api
+    this.api = api;
     this.model = model;
     this.mainContainerEl = document.querySelector("#main-container");
     this.inputEl = document.querySelector("#note-input");
     this.buttonEl = document.querySelector("#add-note-button");
-    
+
     this.buttonEl.addEventListener("click", () => {
-      let newNote = this.inputEl.value
+      let newNote = this.inputEl.value;
       if (newNote) {
-      this.api.createNote(newNote,(res)=> {
-        this.model.setNotes(res)
-        this.displayNotes();
-        this.inputEl.value = "";
-      })}
-      
+        this.api.createNote(newNote, (res) => {
+          this.model.setNotes(res);
+          this.displayNotes();
+          this.inputEl.value = "";
+        });
+      }
     });
   }
-
-
 
   displayNotes = () => {
     const elements = document.getElementsByClassName("note");

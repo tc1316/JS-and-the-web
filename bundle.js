@@ -1,8 +1,16 @@
 (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  };
+  var __commonJS = (cb, mod) =>
+    function __require() {
+      return (
+        mod ||
+          (0, cb[__getOwnPropNames(cb)[0]])(
+            (mod = { exports: {} }).exports,
+            mod
+          ),
+        mod.exports
+      );
+    };
 
   // notesModel.js
   var require_notesModel = __commonJS({
@@ -25,7 +33,7 @@
         }
       };
       module.exports = NotesModel2;
-    }
+    },
   });
 
   // notesView.js
@@ -51,8 +59,7 @@
         }
         displayNotes = () => {
           const elements = document.getElementsByClassName("note");
-          while (elements.length > 0)
-            elements[0].remove();
+          while (elements.length > 0) elements[0].remove();
           let array = this.model.getNotes();
           for (let i = 0; i < array.length; i++) {
             let newDiv = document.createElement("div");
@@ -63,7 +70,7 @@
         };
       };
       module.exports = NotesView2;
-    }
+    },
   });
 
   // ../notes-backend-server/notesApi.js
@@ -71,20 +78,24 @@
     "../notes-backend-server/notesApi.js"(exports, module) {
       var NotesApi2 = class {
         loadNotes(callback) {
-          fetch("http://localhost:3000/notes").then((res) => res.json()).then((res) => callback(res));
+          fetch("http://localhost:3000/notes")
+            .then((res) => res.json())
+            .then((res) => callback(res));
         }
         createNote(note, callback) {
           fetch("http://localhost:3000/notes", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({ "content": note })
-          }).then((res) => res.json()).then((data) => callback(data));
+            body: JSON.stringify({ content: note }),
+          })
+            .then((res) => res.json())
+            .then((data) => callback(data));
         }
       };
       module.exports = NotesApi2;
-    }
+    },
   });
 
   // index.js

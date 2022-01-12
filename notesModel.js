@@ -8,9 +8,8 @@ class NotesModel {
   }
 
   setNotes(notes) {
-    this.notes = notes
+    this.notes = notes;
   }
-
 
   addNote(note) {
     this.notes.push(note);
