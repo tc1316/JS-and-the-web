@@ -14,6 +14,9 @@
         getNotes() {
           return this.notes;
         }
+        setNotes(notes) {
+          this.notes = notes;
+        }
         addNote(note) {
           this.notes.push(note);
         }
@@ -29,7 +32,8 @@
   var require_notesView = __commonJS({
     "notesView.js"(exports, module) {
       var NotesView2 = class {
-        constructor(model2) {
+        constructor(model2, api2) {
+          this.api = api2;
           this.model = model2;
           this.mainContainerEl = document.querySelector("#main-container");
           this.inputEl = document.querySelector("#note-input");
@@ -59,14 +63,29 @@
     }
   });
 
+  // notesApi.js
+  var require_notesApi = __commonJS({
+    "notesApi.js"(exports, module) {
+      var NotesApi2 = class {
+        loadNotes(callback) {
+          fetch("http://localhost:3000/notes").then((res) => res.json()).then((res) => callback(res));
+        }
+      };
+      module.exports = NotesApi2;
+    }
+  });
+
   // index.js
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
+  var NotesApi = require_notesApi();
   var model = new NotesModel();
-  model.addNote("Buy milk");
-  model.addNote("Go to the gym");
-  var view = new NotesView(model);
-  view.displayNotes();
+  var api = new NotesApi();
+  var view = new NotesView(model, api);
+  api.loadNotes((notes) => {
+    model.setNotes(notes);
+    console.log(notes);
+    view.displayNotes();
+  });
   console.log("The notes app is running");
-  console.log(model.getNotes());
 })();
