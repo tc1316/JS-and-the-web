@@ -46,6 +46,7 @@
           this.mainContainerEl = document.querySelector("#main-container");
           this.inputEl = document.querySelector("#note-input");
           this.buttonEl = document.querySelector("#add-note-button");
+          this.resetButtonEl = document.querySelector("#reset-button");
           this.buttonEl.addEventListener("click", () => {
             let newNote = this.inputEl.value;
             if (newNote) {
@@ -55,6 +56,13 @@
                 this.inputEl.value = "";
               });
             }
+          });
+          this.resetButtonEl.addEventListener("click", () => {
+            this.api.resetNotes();
+            this.api.loadNotes((notes) => {
+              model2.setNotes(notes);
+            });
+            this.displayNotes();
           });
         }
         displayNotes = () => {
@@ -73,9 +81,9 @@
     },
   });
 
-  // ../notes-backend-server/notesApi.js
+  // notes-backend-server/notesApi.js
   var require_notesApi = __commonJS({
-    "../notes-backend-server/notesApi.js"(exports, module) {
+    "notes-backend-server/notesApi.js"(exports, module) {
       var NotesApi2 = class {
         loadNotes(callback) {
           fetch("http://localhost:3000/notes")
@@ -92,6 +100,11 @@
           })
             .then((res) => res.json())
             .then((data) => callback(data));
+        }
+        resetNotes() {
+          fetch("http://localhost:3000/notes", {
+            method: "DELETE",
+          });
         }
       };
       module.exports = NotesApi2;

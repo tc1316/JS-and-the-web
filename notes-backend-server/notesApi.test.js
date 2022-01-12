@@ -28,4 +28,14 @@ describe("Notes class", () => {
       });
     });
   });
+
+  // it("calls delete to wipe all notes", async () => {
+  //   const api = new NotesApi();
+  //   fetch.mockResponseOnce(
+  //     JSON.stringify(["This note is coming from the server"])
+  //   );
+  //   api.reset()
+  //   api.loadNotes((notes) => {
+  //     expect(notes).toEqual([]);
+  //   });
 });
