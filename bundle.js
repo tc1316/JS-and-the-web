@@ -50,10 +50,9 @@
             }
           });
           this.resetButtonEl.addEventListener("click", () => {
-            this.api.resetNotes().then(() => {
-              this.model.reset();
-              this.displayNotes();
-            });
+            this.api.resetNotes();
+            this.model.reset();
+            this.displayNotes();
           });
         }
         displayNotes = () => {
@@ -77,20 +76,24 @@
   var require_notesApi = __commonJS({
     "notes-backend-server/notesApi.js"(exports, module) {
       var NotesApi2 = class {
-        loadNotes(callback) {
-          fetch("http://localhost:3000/notes").then((res) => res.json()).then((res) => callback(res));
+        async loadNotes(callback) {
+          const res = await fetch("http://localhost:3000/notes");
+          const result = await res.json();
+          const data = await callback(result);
         }
-        createNote(note, callback) {
-          fetch("http://localhost:3000/notes", {
+        async createNote(note, callback) {
+          const res = await fetch("http://localhost:3000/notes", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
             },
             body: JSON.stringify({ content: note })
-          }).then((res) => res.json()).then((data) => callback(data));
+          });
+          const result = await res.json();
+          const data = await callback(result);
         }
-        resetNotes() {
-          fetch("http://localhost:3000/notes", {
+        async resetNotes() {
+          await fetch("http://localhost:3000/notes", {
             method: "DELETE"
           });
         }

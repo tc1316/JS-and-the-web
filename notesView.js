@@ -19,9 +19,9 @@ class NotesView {
     });
 
     this.resetButtonEl.addEventListener("click", () => {
-      this.api.resetNotes().then(()=> {
+      this.api.resetNotes()
       this.model.reset()
-      this.displayNotes()})
+      this.displayNotes()
     });
   }
 
